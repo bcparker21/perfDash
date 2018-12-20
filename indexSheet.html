@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Valley Regional Transit Performance Dashboard</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current',{'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart(){
+      // var queryString = encodeURIComponent('SELECT C23:D27');
+
+      var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1lYJ4i3vdfNL59_VzUyUrX6ZMCZq00EBFFQ-lg-T7HgM/gviz/tq?range=c2:D21');
+      query.send(handleSampleDataQueryResponse);
+    }
+
+    function handleSampleDataQueryResponse(response) {
+      if (response.isError()) {
+        alert('Error in query: '+response.getMessage()+ ' '+response.getDetailedMessage());
+        return;
+      }
+
+      var data = response.getDataTable();
+      var options ={
+        title: '3rd Quarter Ridership',
+        pieHole: 0.4,
+        colors: ['#00008b', '#663399', '#ff8c00', '#a9a9a9', '#32cd32'] 
+      };
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+      function selectHandler(){
+        var selectedItem = chart.getSelection()[0];
+        if (selectedItem) {
+          var type = data.getValue(selectedItem.row, 0);
+          alert ('The user selected ' + type);
+        }
+      }
+      google.visualization.events.addListener(chart, 'select', selectHandler);
+      chart.draw(data, options)
+    }
+
+  </script>
+</head>
+<body>
+  <div id="piechart" style="width: 900px; height: 500px;"></div>
+</body>
+</html>

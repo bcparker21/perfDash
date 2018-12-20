@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+      	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1MO2rUUG1JG6BDizlpPIK2CnJh-OEhjYADz2-X6d2jPc/edit#gid=1661451662');
+      	
+
+        // var data = google.visualization.arrayToDataTable([
+        //   ['Type', 'Ridership'],
+        //   ['Fixed Route',     73],
+        //   ['Demand Response',      10],
+        //   ['CommuterRide', 7],
+        //   ['Specialized Transportation',  4],
+        //   ['Bikeshare', 1]
+        // ]);
+
+        var options = {
+          title: 'Ridership by Type',
+          pieHole: .6
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
